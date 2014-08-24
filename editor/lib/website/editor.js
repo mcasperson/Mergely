@@ -90,7 +90,7 @@ $(document).ready(function() {
 		height: 'auto',
 		cmsettings: {
 			lineNumbers: true,
-			readOnly: isSample
+			readOnly: isSample,
 		}
 	});
 	if (parameters.get('lhs', null)) {
@@ -101,6 +101,8 @@ $(document).ready(function() {
 		var url = parameters.get('rhs');
 		samedomainGET(ed, 'rhs', url);
 	}
+	
+	ed.mergely('options', {rhs_margin: "left"});
 	
 	// Load
 	if (key.length == 8) {
