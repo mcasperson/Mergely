@@ -95,11 +95,11 @@ $(document).ready(function() {
 	});
 	if (parameters.get('lhs', null)) {
 		var url = parameters.get('lhs');
-		crossdomainGET(ed, 'lhs', url);
+		samedomainGET(ed, 'lhs', url);
 	}
 	if (parameters.get('rhs', null)) {
 		var url = parameters.get('rhs');
-		crossdomainGET(ed, 'rhs', url);
+		samedomainGET(ed, 'rhs', url);
 	}
 	
 	// Load
@@ -383,6 +383,21 @@ $(document).ready(function() {
 		});
 	}
 	
+	function samedomainGET(ed, side, url) {
+		$.ajax({
+			type: 'GET', 
+			dataType: 'text',
+			url: url,
+			contentType: 'text/plain',
+			success: function (response) {
+				ed.mergely(side, response);
+			},
+			error: function(xhr, ajaxOptions, thrownError){
+				console.error('error', xhr, ajaxOptions, thrownError);
+			}
+		});
+	}
+	
 	function crossdomainGET(ed, side, url) {
 		$.ajax({
 			type: 'GET', dataType: 'text',
@@ -464,7 +479,7 @@ $(document).ready(function() {
 					for (var side in urls) {
 						var url = urls[side];
 						if (!url) continue;
-						crossdomainGET(ed, side, url);
+						samedomainGET(ed, side, url);
 					}
 					
 					if (file_data.hasOwnProperty('file-lhs')) {
